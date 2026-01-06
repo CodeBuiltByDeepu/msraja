@@ -1,0 +1,273 @@
+/* ================= VARIABLES ================= */
+:root {
+    --bg-main: #0b0f19;
+    --bg-dark: #020617;
+    --glass-bg: rgba(255,255,255,0.03);
+
+    --yellow: #facc15;
+    --red: #ef4444;
+    --red-dark: #dc2626;
+
+    --text-main: #e5e7eb;
+    --text-muted: #94a3b8;
+
+    --radius: 20px;
+    --transition: 0.45s ease;
+}
+
+/* ================= RESET ================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: var(--bg-main);
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+
+a { text-decoration: none; }
+
+/* ================= HEADER ================= */
+.gallery-header {
+    background: var(--bg-dark);
+    padding: 22px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.gallery-header h1 {
+    font-size: 28px;
+    color: var(--yellow);
+}
+
+/* ================= BACK TO HOME BUTTON ================= */
+.back-home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 10px 22px;
+    border-radius: 999px;
+
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+
+    color: #facc15;
+    font-size: 14px;
+    font-weight: 600;
+
+    backdrop-filter: blur(10px);
+    box-shadow:
+        0 10px 25px rgba(239, 68, 68, 0.25),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+
+    transition: all 0.4s ease;
+}
+
+/* Arrow Icon */
+.back-icon {
+    font-size: 18px;
+    transition: transform 0.4s ease;
+}
+
+/* Hover Effect */
+.back-home-btn:hover {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 20px 45px rgba(239, 68, 68, 0.45),
+        0 0 20px rgba(250, 204, 21, 0.35);
+}
+
+.back-home-btn:hover .back-icon {
+    transform: translateX(-6px);
+}
+
+/* Active / Click */
+.back-home-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 480px) {
+    .back-home-btn {
+        padding: 9px 18px;
+        font-size: 13px;
+    }
+}
+
+/* ================= HERO ================= */
+.gallery-hero {
+    padding: 90px 8% 70px;
+    text-align: center;
+    background: radial-gradient(circle at top, #111827, #020617);
+}
+
+.gallery-hero h2 {
+    font-size: 42px;
+    color: var(--yellow);
+    margin-bottom: 15px;
+}
+
+.gallery-hero p {
+    max-width: 620px;
+    margin: auto;
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+/* ================= GALLERY GRID ================= */
+.gallery-grid {
+    padding: 70px 8% 110px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 35px;
+}
+
+/* ================= CARD ================= */
+.gallery-card {
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 30px 60px rgba(0,0,0,0.7),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+
+    transition: var(--transition);
+}
+
+/* Glow Border */
+.gallery-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius);
+    background: linear-gradient(120deg, transparent, rgba(250,204,21,0.15), transparent);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+/* Hover Effects */
+.gallery-card:hover {
+    transform: translateY(-14px) scale(1.02);
+}
+
+.gallery-card:hover::before {
+    opacity: 1;
+}
+
+.gallery-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.gallery-card:hover img {
+    transform: scale(1.12);
+}
+
+/* Overlay */
+.gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(2,6,23,0.85), transparent);
+    display: flex;
+    align-items: flex-end;
+    padding: 22px;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.gallery-card:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-overlay span {
+    font-size: 15px;
+    color: var(--yellow);
+    font-weight: 600;
+}
+
+/* ================= LIGHTBOX ================= */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(2,6,23,0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.4s ease;
+}
+
+.lightbox.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: var(--radius);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.9);
+    animation: zoom 0.5s ease;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    font-size: 40px;
+    color: var(--yellow);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.lightbox-close:hover {
+    color: var(--red);
+}
+
+@keyframes zoom {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* ================= FOOTER ================= */
+.gallery-footer {
+    background: var(--bg-dark);
+    padding: 18px;
+    text-align: center;
+    font-size: 13px;
+    color: #9ca3af;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+    .gallery-hero h2 { font-size: 34px; }
+    .gallery-grid { padding: 50px 6% 90px; }
+}
+
+@media (max-width: 480px) {
+    .gallery-hero h2 { font-size: 28px; }
+    .gallery-header { flex-direction: column; gap: 10px; }
+}
